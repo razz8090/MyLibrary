@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    environment:
+      - mongodb+srv://razz8090:<db_password>@mylibrary-develop.puz0f.mongodb.net/?retryWrites=true&w=majority&appName=mylibrary-develop
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: razz8090
+      MONGO_INITDB_ROOT_PASSWORD: Razz@1996

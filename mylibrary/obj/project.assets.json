@@ -1345,11 +1345,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rajkumarprajapati/Projects/mylibrary/mylibrary/mylibrary.csproj",
+      "projectUniqueName": "/Volumes/RazzDisk/Work/MyLibrary/mylibrary/mylibrary.csproj",
       "projectName": "mylibrary",
-      "projectPath": "/Users/rajkumarprajapati/Projects/mylibrary/mylibrary/mylibrary.csproj",
+      "projectPath": "/Volumes/RazzDisk/Work/MyLibrary/mylibrary/mylibrary.csproj",
       "packagesPath": "/Users/rajkumarprajapati/.nuget/packages/",
-      "outputPath": "/Users/rajkumarprajapati/Projects/mylibrary/mylibrary/obj/",
+      "outputPath": "/Volumes/RazzDisk/Work/MyLibrary/mylibrary/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rajkumarprajapati/.nuget/NuGet/NuGet.Config"
