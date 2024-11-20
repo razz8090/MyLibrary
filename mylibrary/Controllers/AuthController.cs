@@ -26,7 +26,7 @@ public class AuthController : Controller
         // Replace with actual user validation logic
         if (request.UserName == "admin" && request.Password == "password")
         {
-            var token = _jwtTokenHelper.GenerateToken(request.UserName, new List<Claim> { new Claim("role", "admin") });
+            var token = _jwtTokenHelper.GenerateToken(request.UserName);
             return Ok(new { Token = token });
         }
 

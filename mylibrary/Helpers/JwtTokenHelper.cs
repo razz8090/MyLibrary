@@ -1,5 +1,4 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
@@ -16,15 +15,13 @@ public class JwtTokenHelper
         _jwtSettings = jwtSettings.Value;
     }
 
-    public string GenerateToken(string username, List<Claim> additionalClaims)
+    public string GenerateToken(string username)
     {
         var claims = new List<Claim>
         {
             new Claim("UserName", username),
             new Claim("RelationId", Guid.NewGuid().ToString())
         };
-
-        claims.AddRange(additionalClaims);
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -1,4 +1,45 @@
 ﻿<Properties StartupConfiguration="{D9817038-3129-461C-9E98-52D742FAF0DF}|https">
-  <MonoDevelop.Ide.ItemProperties.mylibrary PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.mylibrary PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="mylibrary/Models/User/User.cs">
+    <Files>
+      <File FileName="mylibrary/Controllers/AuthController.cs" Line="31" Column="10" />
+      <File FileName="mylibrary/Helpers/JwtTokenHelper.cs" Line="19" Column="6" />
+      <File FileName="mylibrary/appsettings.json" />
+      <File FileName="mylibrary/DTOs/ResponseDTOs/CommonResponse.cs" />
+      <File FileName="mylibrary/Dockerfile" />
+      <File FileName="mylibrary/docker-compose.yml" Line="19" Column="22" />
+      <File FileName="mylibrary/DTOs/ResponseDTOs/TokenRequest.cs" Line="6" Column="38" />
+      <File FileName="mylibrary/Models/Book.cs" Line="1" Column="1" />
+      <File FileName="mylibrary/Models/User/User.cs" Line="59" Column="2" />
+      <File FileName="mylibrary/Models/CommonModel/ModelExtension.cs" Line="17" Column="51" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="mylibrary">
+            <Node name="mylibrary" selected="True">
+              <Node name="DTOs" expanded="True">
+                <Node name="ResponseDTOs" expanded="True" />
+              </Node>
+              <Node name="Models" expanded="True">
+                <Node name="CommonModel" expanded="True" />
+                <Node name="User" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="mylibrary" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
 </Properties>
