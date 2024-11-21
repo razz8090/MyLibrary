@@ -90,3 +90,9 @@
 /Volumes/RazzDisk/Work/MyLibrary/mylibrary/obj/Debug/net7.0/mylibrary.pdb
 /Volumes/RazzDisk/Work/MyLibrary/mylibrary/obj/Debug/net7.0/mylibrary.genruntimeconfig.cache
 /Volumes/RazzDisk/Work/MyLibrary/mylibrary/obj/Debug/net7.0/ref/mylibrary.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/BouncyCastle.Cryptography.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/MailKit.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/MimeKit.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Formats.Asn1.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Security.Cryptography.Pkcs.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/runtimes/win/lib/net7.0/System.Security.Cryptography.Pkcs.dll

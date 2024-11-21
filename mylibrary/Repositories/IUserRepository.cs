@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver;
 using mylibrary.Models;
+using mylibrary.Models.User;
 
 namespace mylibrary.Repositories.Interfaces;
 

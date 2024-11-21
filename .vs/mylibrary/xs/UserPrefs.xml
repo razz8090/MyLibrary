@@ -6,31 +6,35 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.mylibrary PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mylibrary/Models/User/User.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mylibrary/Services/UserService.cs">
     <Files>
-      <File FileName="mylibrary/Controllers/AuthController.cs" Line="31" Column="10" />
-      <File FileName="mylibrary/Helpers/JwtTokenHelper.cs" Line="19" Column="6" />
+      <File FileName="mylibrary/Controllers/AuthController.cs" />
+      <File FileName="mylibrary/Helpers/JwtTokenHelper.cs" />
       <File FileName="mylibrary/appsettings.json" />
-      <File FileName="mylibrary/DTOs/ResponseDTOs/CommonResponse.cs" />
+      <File FileName="mylibrary/DTOs/ResponseDTOs/CommonResponse.cs" Line="4" Column="28" />
       <File FileName="mylibrary/Dockerfile" />
-      <File FileName="mylibrary/docker-compose.yml" Line="19" Column="22" />
-      <File FileName="mylibrary/DTOs/ResponseDTOs/TokenRequest.cs" Line="6" Column="38" />
-      <File FileName="mylibrary/Models/Book.cs" Line="1" Column="1" />
-      <File FileName="mylibrary/Models/User/User.cs" Line="59" Column="2" />
-      <File FileName="mylibrary/Models/CommonModel/ModelExtension.cs" Line="17" Column="51" />
+      <File FileName="mylibrary/docker-compose.yml" />
+      <File FileName="mylibrary/DTOs/ResponseDTOs/TokenRequest.cs" />
+      <File FileName="mylibrary/Models/Book.cs" />
+      <File FileName="mylibrary/Models/User/User.cs" Line="28" Column="1" />
+      <File FileName="mylibrary/Models/CommonModel/ModelExtension.cs" />
+      <File FileName="mylibrary/Services/AuthService.cs" Line="1" Column="1" />
+      <File FileName="mylibrary/Services/BookService.cs" Line="1" Column="1" />
+      <File FileName="mylibrary/Repositories/UserRepository.cs" Line="21" Column="5" />
+      <File FileName="mylibrary/Repositories/BookRepository.cs" Line="18" Column="1" />
+      <File FileName="mylibrary/Repositories/IUserRepository.cs" Line="4" Column="45" />
+      <File FileName="mylibrary/Services/UserService.cs" Line="8" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="mylibrary">
-            <Node name="mylibrary" selected="True">
-              <Node name="DTOs" expanded="True">
-                <Node name="ResponseDTOs" expanded="True" />
-              </Node>
-              <Node name="Models" expanded="True">
-                <Node name="CommonModel" expanded="True" />
-                <Node name="User" expanded="True" />
-              </Node>
+          <Node name="mylibrary" expanded="True">
+            <Node name="mylibrary" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="DTOs" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Repositories" expanded="True" />
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>

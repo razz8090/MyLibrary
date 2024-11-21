@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using mylibrary.Config;
-using mylibrary.Models;
+using mylibrary.Models.User;
 using mylibrary.Repositories.Interfaces;
 
 namespace mylibrary.Repositories.Services;
