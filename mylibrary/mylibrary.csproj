@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>346b93ae-5ef7-4963-8c73-8e29aadcf9b3</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.20" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
+    <PackageReference Include="MimeKit" Version="4.8.0" />
+    <PackageReference Include="MailKit" Version="4.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Models\" />
+    <None Remove="DTOs\" />
+    <None Remove="Repositories\" />
+    <None Remove="Services\" />
+    <None Remove="Config\" />
+    <None Remove="Helpers\" />
+    <None Remove="DTOs\ResponseDTOs\" />
+    <None Remove="Models\User\" />
+    <None Remove="Models\CommonModel\" />
+    <None Remove="DTOs\UserDtos\" />
+    <None Remove="Utility\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Services\" />
+    <Folder Include="Config\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="DTOs\ResponseDTOs\" />
+    <Folder Include="Models\User\" />
+    <Folder Include="Models\CommonModel\" />
+    <Folder Include="DTOs\UserDtos\" />
+    <Folder Include="Utility\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+  </ItemGroup>
+</Project>
