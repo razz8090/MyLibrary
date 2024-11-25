@@ -16,6 +16,7 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
     <PackageReference Include="MimeKit" Version="4.8.0" />
     <PackageReference Include="MailKit" Version="4.8.0" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
     <None Remove="Models\CommonModel\" />
     <None Remove="DTOs\UserDtos\" />
     <None Remove="Utility\" />
+    <None Remove="IServices\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -43,6 +45,7 @@
     <Folder Include="Models\CommonModel\" />
     <Folder Include="DTOs\UserDtos\" />
     <Folder Include="Utility\" />
+    <Folder Include="IServices\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="docker-compose.override.yml">

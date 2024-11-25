@@ -1,10 +1,11 @@
-﻿using System;
+﻿using mylibrary.Models.User;
 using mylibrary.Utility;
 
 namespace mylibrary.DTOs.UserDtos;
 
-public class UserRequestDto
+public class    UserRequestDto
 {
+    public string ID { get; set; }
     private string firstName;
     public string FirstName
     {
@@ -34,3 +35,25 @@ public class UserRequestDto
     }
 }
 
+public class UserRequest
+{
+    public string ID { get; set; }
+}
+
+public class AddressRequest
+{
+    public string ID { get; set; }
+    public Address Address { get; set; }
+}
+
+public class UserRole
+{
+    public string ID { get; set; }
+    public List<string> Roles { get; set; }
+}
+
+public class UserPermission
+{
+    public string ID { get; set; }
+    public List<string> Permssion { get; set; }
+}

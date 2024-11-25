@@ -96,3 +96,10 @@
 /Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Formats.Asn1.dll
 /Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Security.Cryptography.Pkcs.dll
 /Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/runtimes/win/lib/net7.0/System.Security.Cryptography.Pkcs.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Web.Mvc.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Web.Razor.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Web.Helpers.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Web.WebPages.Deployment.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Web.WebPages.Razor.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/System.Web.WebPages.dll
+/Volumes/RazzDisk/Work/MyLibrary/mylibrary/bin/Debug/net7.0/Microsoft.Web.Infrastructure.dll

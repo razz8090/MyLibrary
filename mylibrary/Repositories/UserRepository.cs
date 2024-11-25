@@ -14,9 +14,9 @@ public class UserRepository: IUserRepository
         var database = client.GetDatabase(config.Value.DatabaseName);
         _user = database.GetCollection<User>(nameof(User));
     }
-    public async Task<List<User>> GetAllBooksAsync() => await _user.Find(_ => true).ToListAsync();
-    public async Task AddBookAsync(User book) => await _user.InsertOneAsync(book);
-    public async Task UpdateBookAsync(UpdateDefinition<User> updateDefinition, FilterDefinition<User> filterDefinition) => await _user.UpdateOneAsync(filterDefinition, updateDefinition);
+    public async Task<List<User>> GetAllUserAsync() => await _user.Find(Builders<User>.Filter.Ne(x=>x.Status, Models.CommonModel.Status.Delete)).ToListAsync();
+    public async Task AddUserAsync(User book) => await _user.InsertOneAsync(book);
+    public async Task UpdateUserAsync(UpdateDefinition<User> updateDefinition, FilterDefinition<User> filterDefinition) => await _user.UpdateOneAsync(filterDefinition, updateDefinition);
     public async Task<User> GetByIdAsync(FilterDefinition<User> filterDefinition) => await _user.Find(filterDefinition).FirstOrDefaultAsync();
 }
 

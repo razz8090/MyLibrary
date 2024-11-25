@@ -1,11 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using mylibrary.DTOs.ResponseDTOs;
 using mylibrary.Models.CommonModel;
 
 namespace mylibrary.Models.User;
 
 [BsonIgnoreExtraElements]
-public class User: ModelExtension
+public class	User: ModelExtension
 {
 	[BsonId, BsonRepresentation(BsonType.ObjectId), BsonElement("_id")]
 	public string ID { get; set; }
@@ -13,7 +14,7 @@ public class User: ModelExtension
 	public string FirstName { get; set; }
 
 	public string LastName { get; set; }
-
+			
 	public string EmailId { get; set; }
 
 	public string MobileNumber { get; set; }
@@ -30,7 +31,9 @@ public class User: ModelExtension
 
 	public PasswordDetails Password { get; set; }
 
-	public RefreshTokenDetails RefreshToken { get; set; }
+	public RegisterStep RegisterStep { get; set; }
+
+    public RefreshTokenDetails RefreshToken { get; set; }
 
 }
 
@@ -97,4 +100,11 @@ public class RefreshTokenDetails
     public string RefreshToken { get; set; }
 
     public DateTime RefreshTokenExpiry { get; set; }
+}
+
+public enum RegisterStep
+{
+    Address = 1,
+    Permssion = 2,
+    Completed = 3
 }

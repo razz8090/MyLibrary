@@ -6,9 +6,9 @@ namespace mylibrary.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    Task<List<User>> GetAllBooksAsync();
-    Task AddBookAsync(User book);
-    Task UpdateBookAsync(UpdateDefinition<User> updateDefinition, FilterDefinition<User> filterDefinition);
-    Task<User> GetByIdAsync(FilterDefinition<User> filterDefinition);
+    Task<List<User>> GetAllUserAsync();
+    Task AddUserAsync(User book);
+    Task UpdateUserAsync(UpdateDefinition<User> updateDefinition, FilterDefinition<User> filterDefinition);
+    Task<User> GetByIdAsync(FilterDefinition<User> filterDefinition);   
 }
 
