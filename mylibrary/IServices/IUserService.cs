@@ -8,7 +8,7 @@ public interface IUserService
     public Task<CommonResponse<UserResponseDto>> RegisterUser(UserRequestDto userRequest, string userId);
     public Task<CommonResponse<UserResponseDto>> UpdateUser(UserRequestDto updateRequest, string userId);
     public Task<CommonResponse<List<UsersDto>>> GetUsers();
-    public Task<CommonResponse<UserDetails>> GetUserById(UserDetails userId);
+    public Task<CommonResponse<UserDetails>> GetUserById(UserRequest userId);
     public Task<CommonResponse<UserResponseDto>> ChangesStatusUser(ChangeStatus changeStatus, string userId);
     public Task<CommonResponse<UserResponseDto>> CheckDuplicate(UserRequestDto userRequest);
 

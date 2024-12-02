@@ -8,6 +8,7 @@ namespace mylibrary.Models;
 public class EmailTemplate
 {
 	[BsonId, BsonRepresentation(BsonType.ObjectId), BsonElement("_id")]
+	public string ID { get; set; }
 	public string Key { get; set; }
 	public string Template { get; set; }
 }

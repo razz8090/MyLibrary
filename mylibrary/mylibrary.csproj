@@ -32,6 +32,7 @@
     <None Remove="DTOs\UserDtos\" />
     <None Remove="Utility\" />
     <None Remove="IServices\" />
+    <None Remove="DTOs\LoginDtos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -46,6 +47,7 @@
     <Folder Include="DTOs\UserDtos\" />
     <Folder Include="Utility\" />
     <Folder Include="IServices\" />
+    <Folder Include="DTOs\LoginDtos\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="docker-compose.override.yml">

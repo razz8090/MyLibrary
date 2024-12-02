@@ -7,7 +7,12 @@ using mylibrary.DTOs;
 
 namespace mylibrary.Utility;
 
-public class CommunicationManager
+public interface ICommunicationManager
+{
+    public void  SendEmailAsync (MailRequest mailRequest);
+}
+
+public class CommunicationManager: ICommunicationManager
 {
     private readonly MailSetting _mailSettings;
     public CommunicationManager(IOptions<MailSetting> mailSettings)
@@ -15,12 +20,12 @@ public class CommunicationManager
         _mailSettings = mailSettings.Value;
     }
 
-    public async Task SendEmailAsync(MailRequest mailRequest)
+    public void SendEmailAsync(MailRequest mailRequest)
     {
 
         var email = new MimeMessage();
         email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-        email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
+        email.To.Add(MailboxAddress.Parse(AESCryptography.Decrypt(mailRequest.ToEmail)));
         email.Subject = mailRequest.Subject;
 
         ICredentialsByHost credentials = new NetworkCredential(_mailSettings.Mail, _mailSettings.Password);
@@ -45,9 +50,9 @@ public class CommunicationManager
         builder.HtmlBody = mailRequest.Body;
         email.Body = builder.ToMessageBody();
         using var smtp = new SmtpClient();
-        smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+        smtp.Connect(_mailSettings.Host, _mailSettings.Port, false);
         smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-        await smtp.SendAsync(email);
+        smtp.Send(email);
         smtp.Disconnect(true);
     }
 

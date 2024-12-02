@@ -26,6 +26,9 @@ public enum ErrorCode
     Success = 200,
     NotFound = 104,
     UnAuthorized = 401,
-    AlreadyExist = 101
+    AlreadyExist = 101,
+    UserAcountLocked = 102,
+    LoginAttemptExeeded = 103
+
 }
 

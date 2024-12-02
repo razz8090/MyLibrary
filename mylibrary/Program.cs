@@ -1,12 +1,15 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using mylibrary.Config;
+using mylibrary.DTOs;
 using mylibrary.Helpers;
 using mylibrary.IServices;
 using mylibrary.Models;
+using mylibrary.Repositories;
 using mylibrary.Repositories.Interfaces;
 using mylibrary.Repositories.Services;
 using mylibrary.Services;
+using mylibrary.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +22,15 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     return new MongoClient(config.ConnectionString);
 });
 
+builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
 builder.Services.AddScoped<JwtTokenHelper>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
+builder.Services.AddScoped<ICommunicationManager, CommunicationManager>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
