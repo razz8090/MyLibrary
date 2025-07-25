@@ -3,28 +3,42 @@ using mylibrary.DTOs;
 using mylibrary.DTOs.LoginDtos;
 using mylibrary.DTOs.ResponseDTOs;
 using mylibrary.Helpers;
+using mylibrary.IServices;
+using mylibrary.Models;
 using mylibrary.Models.CommonModel;
 using mylibrary.Models.User;
 using mylibrary.Repositories.Interfaces;
 using mylibrary.Utility;
 
+using QRCoder;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Drawing.Processing;
+
+using SixLabors.ImageSharp.Processing;
+using SixLabors.Fonts;
+using System.Buffers.Text;
+
 namespace mylibrary.Services;
 
-public class AuthService
+public class AuthService: IAuthService
 {
     private readonly IUserRepository _user;
     private readonly JwtTokenHelper _jwtTokenHelper;
-    public AuthService(IUserRepository userService, JwtTokenHelper jwtTokenHelper)
+    private ICommunicationManager _communicationManager;
+    public AuthService(IUserRepository userService, JwtTokenHelper jwtTokenHelper, ICommunicationManager communicationManager)
     {
         _user = userService;
         _jwtTokenHelper = jwtTokenHelper;
+        _communicationManager = communicationManager;
     }
+
     public async Task<CommonResponse<LogInResponseDTOs>> Login(LoginRequestDto logInRequest, string userId)
     {
         CommonResponse<LogInResponseDTOs> response = new();
 
         FilterDefinition<User> filterUser = Builders<User>.Filter.Eq(entry => entry.EmailId, logInRequest.EmailId) & Builders<User>.Filter.Eq(entry => entry.Status, Status.Active);
-        User user =  await _user.GetByIdAsync(filterUser);
+        User user = await _user.GetByIdAsync(filterUser);
         if (user == null)
         {
             Console.WriteLine("User not found.");
@@ -56,7 +70,7 @@ public class AuthService
                 user.Password.LoginFailedAttemotCount = 0;
                 user.Password.LoginBlockedTime = null;
 
-                response.Data.Token= _jwtTokenHelper.GenerateToken(user.EmailId); 
+                response.Data.Token = _jwtTokenHelper.GenerateToken(user.EmailId);
 
                 updateUser = updateUser.Set(entry => entry.LastLogin, DateTime.Now);
 
@@ -64,71 +78,58 @@ public class AuthService
             }
             else
             {
-                user.LoginDetails.LoginFailedAttemotCount += 1;
-                if (user.Remarks == null)
-                {
-                    user.Remarks = new();
-                }
-                user.Remarks.Add(new()
-                {
-                    UpdatedBy = userId,
-                    Reamrk = "Password is wrong.",
-                    UodatedOn = DateTime.Now
-
-                });
-                _user.Replace(user);
+                user.Password.LoginFailedAttemotCount += 1;
 
                 Console.WriteLine("Password not matched.");
                 return response;
             }
 
+            updateUser = updateUser.Set(entry => entry.Password, user.Password);
+            await _user.UpdateUserAsync(updateUser, filterUser);
         }
 
 
-        response.Status = ErrorCode.Success;
+        response.Code = ErrorCode.Success;
         return response;
     }
-    public CommonResponse<LogInResponse> ResetPassword(ForgetRequest forgetRequest, string userId)
-    {
-        CommonResponse<LogInResponse> response = new();
 
-        FilterDefinition<User> filterDefinition = Builders<User>.Filter.Eq(entry => entry.EmailId, forgetRequest.Email) & Builders<User>.Filter.Eq(entry => entry.Status, StatusCode.Active);
-        User user = _user.Get(filterDefinition);
+    public async Task<CommonResponse<LogInResponseDTOs>> ResetPassword(LoginRequestDto forgetRequest, string userId)
+    {
+        CommonResponse<LogInResponseDTOs> response = new();
+
+        FilterDefinition<User> filterDefinition = Builders<User>.Filter.Eq(entry => entry.EmailId, forgetRequest.EmailId) & Builders<User>.Filter.Eq(entry => entry.Status, Status.Active);
+        User user = await _user.GetByIdAsync(filterDefinition);
         if (user != null)
         {
-            if (user.LoginDetails.LoginBlockedTime > DateTime.Now)
+            if (user.Password.LoginBlockedTime > DateTime.Now)
             {
                 Console.WriteLine("User's account is locked.");
                 response.ErrorResponse = new(ErrorCode.UserAcountLocked, "User account is locked please try after sometime's");
                 return response;
             }
-            string newPassowrd = UtilityManager.GeneratePassword(6);
-            string salt = AESCryptography.Encrypt(UtilityManager.GeneratePassword(4));
-            user.PasswordDetails = new()
+
+            string newPassowrd = UtilityManager.ComputeSHA512Hash(UtilityManager.GeneratePassword(6));
+            string salt = UtilityManager.ComputeSHA512Hash(UtilityManager.GeneratePassword(4));
+
+            if (user.OldPasswords == null && user.Password != null)
+            {
+                user.OldPasswords = new() { user.Password };
+            }
+            else if (user.OldPasswords != null)
+            {
+                user.OldPasswords.Add(user.Password);
+            }
+
+            user.Password = new()
             {
                 Password = AESCryptography.Encrypt(newPassowrd) + salt,
                 Salt = salt,
-                PasswordExpiryTime = DateTime.Now.AddMinutes(30),
-                IsSystemGeneratedPassword = true
+                ExpiryDate = DateTime.Now.AddMinutes(30),
+                IsAutoGenerated = true
             };
 
-            user.LoginDetails.LoginFailedAttemotCount = 0;
-            user.LoginDetails.OTPFailedCount = 0;
-            user.LoginDetails.LoginBlockedTime = null;
 
-
-            if (user.Remarks == null)
-            {
-                user.Remarks = new();
-            }
-            user.Remarks.Add(new()
-            {
-                UpdatedBy = userId,
-                Reamrk = "User requested for new password.",
-                UodatedOn = DateTime.Now
-
-            });
-            _user.Replace(user);
+            
             MailRequest mailRequest = new()
             {
                 ToEmail = AESCryptography.Decrypt(user.EmailId),
@@ -137,49 +138,135 @@ public class AuthService
                 Attachments = new()
             };
 
-            _communicationManager.SendEmailAsync(mailRequest).GetAwaiter().GetResult();
+            _communicationManager.SendEmailAsync(mailRequest);
         }
-        response.Status = ErrorCode.Success;
+
+        response.Code = ErrorCode.Success;
         return response;
     }
 
-    public CommonResponse<LogInResponse> SetPassword(ChangePasswordRequest changePasswordRequest, string userId)
+    public  async Task<CommonResponse<LogInResponseDTOs>> SetPassword(ChangePasswordRequestDto changePasswordRequest, string userId)
     {
-        CommonResponse<LogInResponse> response = new();
+        CommonResponse<LogInResponseDTOs> response = new();
 
         FilterDefinition<User> filterUser = Builders<User>.Filter.Eq(entry => entry.ID, userId);
 
-        User user = _user.Get(filterUser);
+        User user = await _user.GetByIdAsync(filterUser);
         if (user == null)
         {
             response.ErrorResponse = new(ErrorCode.NotFound, "User not found.");
             return response;
         }
 
-        if (user.IsTnCAcepted == false && changePasswordRequest.IsTnCAcepted == false)
+        if (user.TnC.IsAcepted == false && changePasswordRequest.IsTnCAcepted == false)
         {
             response.ErrorResponse = new(ErrorCode.TnCNotAcepted, "User not acepted the TnC.");
             return response;
         }
-        if (!user.PasswordDetails.Password.Equals(AESCryptography.Encrypt(changePasswordRequest.OldPassword) + user.PasswordDetails.Salt))
+        if (!user.Password.Password.Equals(AESCryptography.Encrypt(changePasswordRequest.OldPassword) + user.Password.Salt))
         {
             response.ErrorResponse = new(ErrorCode.OldPasswordNotMatched, "Old passowrd not correct.");
             return response;
         }
 
-        user.PasswordDetails.Password = AESCryptography.Encrypt(changePasswordRequest.NewPassword) + AESCryptography.Encrypt(UtilityManager.GeneratePassword(4));
-        if (changePasswordRequest.IsTnCAcepted)
+        if (user.OldPasswords == null)
         {
-            user.IsTnCAcepted = true;
-            user.TnCAceptedTime = DateTime.Now;
+            user.OldPasswords = new() { user.Password };
+        }
+        else
+        {
+            user.OldPasswords.Add(user.Password);
         }
 
-        user.CreatedBy = userId;
+        if (user.OldPasswords.Count > 5)
+        {
+            user.OldPasswords.RemoveAt(0);
+        }
+        string salt = UtilityManager.ComputeSHA512Hash(UtilityManager.GeneratePassword(8));
+        user.Password.Salt = salt;
+        user.Password.Password = changePasswordRequest.NewPassword + salt;
+        if (changePasswordRequest.IsTnCAcepted)
+        {
+            user.TnC = new()
+            {
+               IsAcepted = true,
+               AceptedOn = DateTime.Now
+            };
+        }
 
-        _user.Replace(user);
+        user.UpdatedBy = userId;
+        user.UpdatedOn = DateTime.Now;
 
-        response.Status = ErrorCode.Success;
+        await _user.ReplaceUserAsync( filterUser, user);
+
+        response.Code = ErrorCode.Success;
         return response;
+    }
+
+    public async Task<CommonResponse<LoginRequestDto>> Logout(string token,string userId)
+    {
+        CommonResponse<LoginRequestDto> response = new();
+
+        var filterUser = Builders<User>.Filter.Eq(entry => entry.ID, userId);
+        var updateUser = Builders<User>.Update.Set(entry => entry.RefreshToken.RefreshTokenExpiry, DateTime.Now.AddHours(1));
+        await _user.UpdateUserAsync(updateUser, filterUser);
+
+        BlockedToken newBlockedToken = new()
+        {
+            Token = token,
+            CreatedOn = DateTime.Now
+        };
+
+        await _user.AddBlockToken(newBlockedToken);
+        response.Code = ErrorCode.Success;
+        return response;
+    }
+
+    public async Task<string> GenerateQRCodeWithText()
+    {
+        string qrContent = "MSRTC40";
+        string text = "Download app and use this code 'MSRTC40' to log in";
+        int qrSize = 300;
+        int padding = 20;
+
+        using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+        using (QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCodeGenerator.ECCLevel.Q))
+        {
+            PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
+            byte[] qrCodeBytes = qrCode.GetGraphic(qrSize);
+            using (Image<Rgba32> qrImage = Image.Load<Rgba32>(qrCodeBytes))
+            {
+                int imageWidth = qrImage.Width;
+                int imageHeight = qrImage.Height + 50; // Extra space for text
+
+                using (Image<Rgba32> finalImage = new Image<Rgba32>(imageWidth, imageHeight))
+                {
+                    finalImage.Mutate(ctx => ctx.BackgroundColor(Color.White));
+                    finalImage.Mutate(ctx => ctx.DrawImage(qrImage, new Point(0, 0), 1f));
+
+                    FontFamily fontFamily = SystemFonts.Get("Arial");
+                    Font font = new Font(fontFamily, 20, FontStyle.Regular);
+
+                    TextOptions options = new TextOptions(font)
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Top,
+                        WrappingLength = imageWidth - (2 * padding)
+                    };
+
+                    var textSize = TextMeasurer.MeasureSize(text, options);
+                    int textX = (imageWidth - (int)textSize.Width) / 2;
+                    int textY = qrSize + 10;
+
+                    finalImage.Mutate(ctx => ctx.DrawText(new DrawingOptions(), text, font, Color.Black, new PointF(0, qrSize + 10)));
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        finalImage.SaveAsPng(ms);
+                        return Convert.ToBase64String(ms.ToArray());
+                    }
+                }
+            }
+        }
     }
 }
 

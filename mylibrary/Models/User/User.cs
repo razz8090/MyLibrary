@@ -30,10 +30,13 @@ public class	User: ModelExtension
     public TnC TnC { get; set; }
 
 	public PasswordDetails Password { get; set; }
+    public List<PasswordDetails> OldPasswords { get; set; } //Will save las file old password
 
-	public RegisterStep RegisterStep { get; set; }
+
+    public RegisterStep RegisterStep { get; set; }
 
     public RefreshTokenDetails RefreshToken { get; set; }
+	public string Remark { get; set; }
 
 }
 
@@ -94,7 +97,6 @@ public class PasswordDetails
     public int OTPFailedCount { get; set; }
     public int LoginFailedAttemotCount { get; set; }
     public Nullable<DateTime> LoginBlockedTime { get; set; }
-    public List<PasswordDetails> OldPasswords { get; set; } //Will save las file old password
 }
 
 [BsonIgnoreExtraElements]

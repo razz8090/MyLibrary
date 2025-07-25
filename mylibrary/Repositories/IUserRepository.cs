@@ -9,6 +9,9 @@ public interface IUserRepository
     Task<List<User>> GetAllUserAsync();
     Task AddUserAsync(User book);
     Task UpdateUserAsync(UpdateDefinition<User> updateDefinition, FilterDefinition<User> filterDefinition);
-    Task<User> GetByIdAsync(FilterDefinition<User> filterDefinition);   
+    Task<User> GetByIdAsync(FilterDefinition<User> filterDefinition);
+    Task ReplaceUserAsync(FilterDefinition<User> filterUser, User user);
+    Task AddBlockToken(BlockedToken newToken);
+    Task<BlockedToken> GetBlockTokenByToken(FilterDefinition<BlockedToken> filterToken);
 }
 

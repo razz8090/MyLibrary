@@ -1,7 +1,14 @@
 ﻿<Properties StartupConfiguration="{D9817038-3129-461C-9E98-52D742FAF0DF}|https">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.mylibrary PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mylibrary/Services/UserService.cs">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Volumes/RazzDisk/Work/MyLibrary/mylibrary/Controllers/UserController.cs" relfile="mylibrary/Controllers/UserController.cs" line="19" column="1" />
+      <Breakpoint file="/Volumes/RazzDisk/Work/MyLibrary/mylibrary/Services/UserService.cs" relfile="mylibrary/Services/UserService.cs" line="42" column="1" />
+      <Breakpoint file="/Volumes/RazzDisk/Work/MyLibrary/mylibrary/Utility/CommunicationManager.cs" relfile="mylibrary/Utility/CommunicationManager.cs" line="24" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="mylibrary/DTOs/UserDtos/UserRequestDto.cs">
     <Files>
       <File FileName="mylibrary/Controllers/AuthController.cs" />
       <File FileName="mylibrary/Helpers/JwtTokenHelper.cs" />
@@ -13,27 +20,49 @@
       <File FileName="mylibrary/Models/Book.cs" />
       <File FileName="mylibrary/Models/User/User.cs" />
       <File FileName="mylibrary/Models/CommonModel/ModelExtension.cs" />
-      <File FileName="mylibrary/Services/AuthService.cs" />
       <File FileName="mylibrary/Services/BookService.cs" />
       <File FileName="mylibrary/Repositories/UserRepository.cs" />
       <File FileName="mylibrary/Repositories/BookRepository.cs" />
       <File FileName="mylibrary/Repositories/IUserRepository.cs" />
-      <File FileName="mylibrary/Services/UserService.cs" Line="20" Column="1" />
-      <File FileName="mylibrary/DTOs/UserDtos/UserRequestDto.cs" Line="11" Column="39" />
+      <File FileName="mylibrary/Services/UserService.cs" />
+      <File FileName="mylibrary/DTOs/UserDtos/UserRequestDto.cs" Line="15" Column="1" />
+      <File FileName="mylibrary/Models/ErrorLog.cs" />
+      <File FileName="mylibrary/Utility/UtilityManager.cs" />
+      <File FileName="mylibrary/DTOs/UserDtos/UserResponseDto.cs" />
+      <File FileName="mylibrary/DTOs/ResponseDTOs/PaginatedResponse.cs" />
+      <File FileName="mylibrary/IServices/IUserService.cs" />
+      <File FileName="mylibrary/Program.cs" />
+      <File FileName="mylibrary/Controllers/BooksController.cs" />
+      <File FileName="mylibrary/Repositories/IBookRepository.cs" />
+      <File FileName="mylibrary/Models/EmailTemplate.cs" />
+      <File FileName="mylibrary/Repositories/EmailTemplateRepository.cs" />
+      <File FileName="mylibrary/Repositories/IEmailTemplateRepository.cs" />
+      <File FileName="mylibrary/Services/SubscriptionService.cs" />
+      <File FileName="mylibrary/Utility/CommunicationManager.cs" />
+      <File FileName="mylibrary/DTOs/MailSetting.cs" />
+      <File FileName="mylibrary/Utility/AESCryptography.cs" />
+      <File FileName="mylibrary/Services/AuthService.cs" />
+      <File FileName="mylibrary/DTOs/LoginDtos/LogInResponseDTOs.cs" />
+      <File FileName="mylibrary/DTOs/LoginDtos/ChangePasswordRequestDto.cs" />
+      <File FileName="mylibrary/IServices/IAuthService.cs" />
+      <File FileName="mylibrary/DTOs/RegisterRequestDto.cs" />
+      <File FileName="mylibrary/DTOs/SubscriptionRequestDto.cs" />
+      <File FileName="mylibrary/Models/BlockedToken.cs" />
+      <File FileName="mylibrary/Middlewares/TokenBlocklistMiddleware.cs" />
+      <File FileName="mylibrary/Controllers/SubscriptionsController.cs" />
+      <File FileName="mylibrary/Controllers/UserController.cs" />
+      <File FileName="mylibrary/Controllers/CodeAnalyzerController.cs" Line="5" Column="44" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="mylibrary">
-            <Node name="mylibrary">
+            <Node name="mylibrary" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="DTOs" expanded="True">
-                <Node name="UserDtos" expanded="True" />
-              </Node>
-              <Node name="Models" expanded="True" />
-              <Node name="Repositories" expanded="True" />
-              <Node name="Services">
-                <Node name="UserService.cs" selected="True" />
+                <Node name="UserDtos" expanded="True">
+                  <Node name="UserRequestDto.cs" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
@@ -41,9 +70,6 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
 </Properties>

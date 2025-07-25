@@ -28,7 +28,9 @@ public enum ErrorCode
     UnAuthorized = 401,
     AlreadyExist = 101,
     UserAcountLocked = 102,
-    LoginAttemptExeeded = 103
+    LoginAttemptExeeded = 103,
+    TnCNotAcepted = 104,
+    OldPasswordNotMatched = 105
 
 }
 

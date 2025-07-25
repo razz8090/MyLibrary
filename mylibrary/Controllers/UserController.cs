@@ -6,7 +6,7 @@ using mylibrary.IServices;
 
 namespace mylibrary.Controllers;
 
-public class UserController : Controller
+public class UserController : ControllerBase
 {
     public readonly IUserService _user;
     public UserController(IUserService user)

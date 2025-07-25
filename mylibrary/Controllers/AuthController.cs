@@ -1,36 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using mylibrary.DTOs;
+using mylibrary.DTOs.LoginDtos;
 using mylibrary.Helpers;
+using mylibrary.IServices;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace mylibrary.Controllers;
 
-public class AuthController : Controller
+public class AuthController : ControllerBase
 {
     private readonly JwtTokenHelper _jwtTokenHelper;
-    public AuthController(JwtTokenHelper jwtTokenHelper)
+    private readonly IAuthService _authService;
+    public AuthController(JwtTokenHelper jwtTokenHelper, IAuthService authService)
     {
         _jwtTokenHelper = jwtTokenHelper;
+        _authService = authService;
     }
 
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequestDto request)
+    public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
     {
-        // Replace with actual user validation logic
-        if (request.UserName == "admin" && request.Password == "password")
+
+        if (ModelState.IsValid)
         {
-            var token = _jwtTokenHelper.GenerateToken(request.UserName);
-            return Ok(new { Token = token });
+            return Ok(await _authService.Login(request, string.Empty));
         }
 
-        return Unauthorized();
+        else
+        {
+            return BadRequest(ModelState);
+        }
+    }
+
+    [HttpPost("setpassword")]
+    public async Task<IActionResult> SetPassword([FromBody] ChangePasswordRequestDto request)
+    {
+        if (ModelState.IsValid)
+        {
+            return Ok(await _authService.SetPassword(request, string.Empty));
+        }
+        else
+        {
+            return BadRequest(ModelState);
+        }
+    }
+
+    [HttpPost("resetpassword")]
+    public async Task<IActionResult> ResetPassword([FromBody] LoginRequestDto request)
+    {
+        if (ModelState.IsValid)
+        {
+            return Ok(await _authService.ResetPassword(request, string.Empty));
+        }
+        else
+        {
+            return BadRequest(ModelState);
+        }
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        return Ok();
+    }
+
+    [HttpPost("generatecode")]
+    public async Task<IActionResult> GetQrCode()
+    {
+        return Ok(await _authService.GenerateQRCodeWithText());
     }
 }
 
